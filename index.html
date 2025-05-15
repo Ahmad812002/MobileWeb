@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Log_in_Page</title>
+</head>
+
+<body>
+  <form>
+    <fieldset>
+      <legend>Log In Here</legend>
+      <label>Email:</label>
+      <input type="text" placeholder="email" id="name" />
+      <br><br>
+      <label>Password:</label>
+      <input type="password" placeholder="password" id="password" />
+      <br><br>
+       <button type="button" onclick="LogIn()">Log In</button>
+      <!-- Button to check connection -->
+    </fieldset>
+  </form>
+
+  <form>
+    <fieldset>
+      <legend>Sign Up Here</legend>
+      <label>Email:</label>
+      <input type="text" placeholder="email" id="name2" />
+      <br><br>
+      <label>Password:</label>
+      <input type="password" placeholder="password" id="password2" />
+      <br><br>
+       <button type="button" onclick="SignUp()">Sign Up</button>
+    </fieldset>
+  </form>
+
+     <br><br>
+
+  <!--<button type="button" onclick="checkFirebaseConnection()">Check Firebase Connection</button>-->
+
+  <!-- Move the script here to ensure it's loaded after the HTML content -->
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-analytics.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyDIHqbYGSwpGRtjiQlAOxlC-1N03h4PKu8",
+      authDomain: "mobileweb-829b4.firebaseapp.com",
+      databaseURL: "https://mobileweb-829b4-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "mobileweb-829b4",
+      storageBucket: "mobileweb-829b4.firebasestorage.app",
+      messagingSenderId: "464188043136",
+      appId: "1:464188043136:web:705be1333bbd20ab7c9b65",
+      measurementId: "G-BQ60FP0H52"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const auth = getAuth(app);
+
+    
+    window.checkFirebaseConnection = function() {
+      try {
+        // Log a message to the console to confirm the connection
+        console.log("Firebase is successfully connected!");
+        alert("Firebase is connected!");
+      } catch (error) {
+        console.error("Error connecting to Firebase: ", error);
+        alert("Failed to connect to Firebase");
+      }
+    };
+
+   window.SignUp = function () {
+  const email = document.getElementById("name2").value;
+  const password = document.getElementById("password2").value;
+
+  createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      const user = userCredential.user;
+      alert("Sign up successful!");
+      console.log("Signed up user:", user);
+    })
+    .catch((error) => {
+      alert(error.message);
+      console.error("Sign up error:", error);
+    });
+};
+
+window.LogIn = function () {
+  const email = document.getElementById("name").value;
+  const password = document.getElementById("password").value;
+
+  signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      const user = userCredential.user;
+      alert("Login successful!");
+      console.log("Logged in user:", user);
+      // Optional: redirect or show dashboard
+    })
+    .catch((error) => {
+      alert("Login failed: " + error.message);
+      console.error("Login error:", error);
+    });
+};
+  </script>
+</body>
+
+</html>
